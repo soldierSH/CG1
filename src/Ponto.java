@@ -19,4 +19,17 @@ public class Ponto {
     public void setY(int y) {
         this.y = y;
     }
+    //métodos paa invrter sinal
+    public void iSinalX() {
+        this.x = -this.x;
+    }
+    
+    public void iSinalY() {
+        this.y = -this.y;
+    }
+    
+    @Override
+    public String toString() {
+        return "(" + this.x + "," + this.y + ")";
+    }
 }

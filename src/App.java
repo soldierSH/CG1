@@ -1,13 +1,21 @@
 import java.util.Scanner;
-
+import javax.swing.*;
+import tela.Tela;
 public class App {
     public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
-        Ponto pt1 = new Ponto(0,0);
-        Ponto pt2 = new Ponto(5,3);
+        Ponto pt1 = new Ponto(-1,-2);
+        Ponto pt2 = new Ponto(-3,-4);
         System.out.println("Hello world!");
 
         Bresenham b = new Bresenham(pt1,pt2);
-        b.pontos(pt1, pt2);
+        for (Ponto p : b.listapontos) {
+            System.out.println(p.toString());
+        }
+
+        SwingUtilities.invokeLater(()->{
+            Tela tela = new Tela();
+            tela.setVisible(true);
+        });
     }
 }
