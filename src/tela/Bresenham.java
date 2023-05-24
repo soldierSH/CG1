@@ -1,3 +1,4 @@
+package tela;
 import java.lang.Math;
 import java.util.ArrayList;
 
@@ -8,6 +9,9 @@ public class Bresenham {
     public ArrayList <Ponto> listapontos = new ArrayList<>();
 
 
+    public ArrayList<Ponto> getPontos() {
+        return listapontos;
+    }
     Bresenham(){
         this.mudaX = mudaX;
         this.mudaY = mudaY;
@@ -18,12 +22,10 @@ public class Bresenham {
         pontos(p1, p2);
     }
 
-    private void pontos(Ponto p1, Ponto p2) {
+    public void pontos(Ponto p1, Ponto p2) {
         octante(p1, p2);
-        //System.out.println("chegou aqui 1");
         reflexao(this.listapontos);
         bresenham(this.listapontos, p1, p2);
-        //System.out.println("chegou aqui 2");
         
     }
     private void octante(Ponto p1, Ponto p2) {
@@ -96,7 +98,6 @@ public class Bresenham {
         }
     }
     
-    
     private void bresenham(ArrayList<Ponto> listapontos,Ponto p1, Ponto p2){
         int x = p1.getX();
         int y = p1.getY();
@@ -121,5 +122,5 @@ public class Bresenham {
             this.listapontos.add(new Ponto(x, y));
         }
     }
-    
+
 }

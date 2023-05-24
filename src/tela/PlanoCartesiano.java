@@ -35,8 +35,9 @@ public class PlanoCartesiano extends JPanel {
         }
         
         g.setColor(Color.RED);
-        g.drawLine(centroX, 0, centroX, getHeight());
-        g.drawLine(0, centroY, getWidth(), centroY);
+        g.drawLine(0, centroY,400, centroY);
+        g.drawLine(centroX, 0, centroX, 400);
+        
     }
 
     public void paintSquare(int x, int y, Color color) {
@@ -47,4 +48,13 @@ public class PlanoCartesiano extends JPanel {
             repaint();
         }
     }
+    public void limparPontos() {
+        for (int i = 0; i < numPontos; i++) {
+            for (int j = 0; j < numPontos; j++) {
+                grid[i][j] = null;
+            }
+        }
+        repaint();
+    }
+    
 }
