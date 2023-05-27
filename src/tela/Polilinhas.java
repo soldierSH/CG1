@@ -12,14 +12,20 @@ public class Polilinhas {
     }
 
     private void linhas(ArrayList<Ponto> pontos){
-        Ponto anterior = null;
-        Bresenham b = new Bresenham();
-        for (Ponto p : pontos) {
-            if(anterior != null){
-                b.pontos(anterior,p);
-            }
+        Ponto anterior = pontos.get(0);
+        int cont = 1;
+
+        do {
+            Ponto p = pontos.get(cont);
+            Bresenham b = new Bresenham(anterior,p);
+            listapontos.addAll(b.listapontos);
             anterior = p;
-        }
-        listapontos = b.listapontos;
+            cont++;
+        } while (cont != pontos.size());
+            //b.pontos(new Ponto(pontos.get(i).x,pontos.get(i).y), new Ponto(pontos.get(i+1).x,pontos.get(i+1).y));
+       // listapontos = b.listapontos;
+        System.out.println(listapontos.toString());
+        
     }
+
 }

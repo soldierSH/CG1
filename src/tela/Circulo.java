@@ -3,7 +3,7 @@ package tela;
 import java.util.ArrayList;
 
 public class Circulo {
-    private ArrayList<Ponto> listapontos = new ArrayList<>();
+    public ArrayList<Ponto> listapontos = new ArrayList<>();
 
     Circulo(int raio, Ponto centro){
         pontosCirculo(raio,centro);
@@ -33,12 +33,12 @@ public class Circulo {
 
     private void addPonto(int x, int y, Ponto centro) {
         listapontos.add(new Ponto(centro.getX() + x, centro.getY() + y));
-        listapontos.add(new Ponto(centro.getX() - x, centro.getY() + y));
         listapontos.add(new Ponto(centro.getX() + x, centro.getY() - y));
-        listapontos.add(new Ponto(centro.getX() - x, centro.getY() - y));
         listapontos.add(new Ponto(centro.getX() + y, centro.getY() + x));
-        listapontos.add(new Ponto(centro.getX() - y, centro.getY() + x));
         listapontos.add(new Ponto(centro.getX() + y, centro.getY() - x));
+        listapontos.add(new Ponto(centro.getX() - x, centro.getY() + y));
+        listapontos.add(new Ponto(centro.getX() - x, centro.getY() - y));
+        listapontos.add(new Ponto(centro.getX() - y, centro.getY() + x));
         listapontos.add(new Ponto(centro.getX() - y, centro.getY() - x));
     }
 }

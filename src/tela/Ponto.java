@@ -6,7 +6,6 @@ public class Ponto {
         this.x = x;
         this.y = y;
     }
-
     public int getX() {
         return x;
     }

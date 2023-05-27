@@ -91,9 +91,9 @@ public class Bresenham {
         }
         if (this.mudaXY) {
             for (Ponto p : listapontos) {
-                int temp = p.getX();
+                int aux = p.getX();
                 p.setX(p.getY());
-                p.setY(temp);
+                p.setY(aux);
             }
         }
     }

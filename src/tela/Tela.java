@@ -14,10 +14,16 @@ public class Tela extends JFrame {
     protected JPanel painelInicial;
     protected JPanel painelFinal;
     protected JLabel labelCartesiano = new JLabel("Plano Cartesiano [40x40]");
+    protected JLabel labelx = new JLabel("Eixo X");
+    protected JLabel labely = new JLabel("Eixo Y");
+    protected Color corPonto = Color.RED; //default cor, vermelho
+    protected String[] cores = {"Vermelho", "Verde", "Azul", "Laranja"};
+    protected JComboBox<String> boxCor = new JComboBox<>(cores);
+    //-----------------------------
     protected JLabel name = new JLabel("by Scarlet Hanna");
     protected JComboBox<String> boxMenu = new JComboBox<String>();
     protected Font font = labelCartesiano.getFont(); // Obtém a fonte atual
-    protected Font novaFonte = font.deriveFont(16f); // Define uma nova fonte com tamanho 20
+    protected Font novaFonte = font.deriveFont(14f); //fonte com tamanho 20
     protected String[] opcoes = {"Bresenham", "Círculos","Curvas","Polilinha"};
     protected DefaultComboBoxModel<String> boxModel = new DefaultComboBoxModel<>(opcoes);
     //-----------------------------
@@ -40,7 +46,12 @@ public class Tela extends JFrame {
     protected JTextField textLinha = new JTextField(4);
     protected JButton adicionar = new JButton("+");
     protected ArrayList<Ponto> pontos = new ArrayList<>();
-    protected int cont = 1;
+    //-----------------------------
+    protected JLabel cse = new JLabel("Canto Superior Esquerdo:");
+    protected JTextField cseText = new JTextField(4);
+    protected JLabel cid = new JLabel("Canto Inferior Direito:");
+    protected JTextField cidText = new JTextField(4);
+    protected JButton recortar = new JButton("Recorte");
 
 
     public Tela() {
@@ -50,7 +61,8 @@ public class Tela extends JFrame {
     public JPanel getPlano() {
         if (plano == null) {
             plano = new PlanoCartesiano(40, 10);
-            plano.setPreferredSize(new Dimension(getWidth() / 2, getHeight()));
+            plano.setPreferredSize(new Dimension(getWidth() / 2, getHeight()-108));
+            plano.setBounds(30, 0, plano.getPreferredSize().width, plano.getPreferredSize().height);
         }
         return plano;
     }
@@ -58,11 +70,11 @@ public class Tela extends JFrame {
     public JPanel getpainelInicial() {
         if (painelInicial == null) {
             painelInicial = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
+            painelInicial.setPreferredSize(new Dimension(0, 200));
             painelInicial.add(pInicial);
             painelInicial.add(initX);
             painelInicial.add(initY);
-            painelInicial.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 20)); // Adiciona margem à direita
-        }
+            
         return painelInicial;
     }
 
@@ -72,7 +84,7 @@ public class Tela extends JFrame {
             painelFinal.add(pFinal);
             painelFinal.add(finalX);
             painelFinal.add(finalY);
-            painelFinal.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
+            painelFinal.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         }
         return painelFinal;
@@ -83,16 +95,22 @@ public class Tela extends JFrame {
             pEsquerda = new JPanel();
             pEsquerda.setLayout(null);
 
+
            
             addComboBox();
-            desenhar.setBounds(30, 380, desenhar.getPreferredSize().width, desenhar.getPreferredSize().height);
+            labelx.setBounds(346, 218, labelx.getPreferredSize().width, labelx.getPreferredSize().height);
+            pEsquerda.add(labelx);
+            
+            desenhar.setBounds(30, 300, desenhar.getPreferredSize().width, desenhar.getPreferredSize().height);
             pEsquerda.add(desenhar);
+            
             // Adicione o nome
             name.setBounds(2, 460, name.getPreferredSize().width, name.getPreferredSize().height);
+            addComboBoxCor();
             pEsquerda.add(name);
 
                     
-            pEsquerda.setPreferredSize(new Dimension(400, 100));
+            pEsquerda.setPreferredSize(new Dimension(200, 100));
 
             desenhar.addActionListener(new ActionListener() {
                 @Override
@@ -109,18 +127,60 @@ public class Tela extends JFrame {
     public JPanel getpDireita() {
         if (pDireita == null) {
             pDireita = new JPanel();
-            pDireita.setLayout(new BoxLayout(pDireita, BoxLayout.PAGE_AXIS));
-            labelCartesiano.setFont(novaFonte);
-            //name
-            pDireita.add(labelCartesiano);
+            pDireita.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 26));
             pDireita.add(getPlano());
         }
         return pDireita;
     }
 
+    private void addComboBoxCor() {
+        
+    
+        boxCor.setBounds(114, 450, boxCor.getPreferredSize().width, boxCor.getPreferredSize().height);
+        pEsquerda.add(boxCor);
+    
+        boxCor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mudarCor();
+            }
+        });
+    }
+
+    private void mudarCor(){
+        Component[] components = pEsquerda.getComponents();
+        for (Component component : components) {
+            if (component != boxCor) {
+                pEsquerda.remove(component);
+            }
+        }
+        String selectedOption = (String) boxCor.getSelectedItem();
+
+        if (selectedOption.equals("Vermelho")){
+            corPonto = Color.RED;
+        } else if (selectedOption.equals("Verde")){
+            corPonto = Color.GREEN;
+            plano.Recorte(new Ponto(-10,10), new Ponto(13,0),Color.GRAY);
+            plano.recorte = true;
+        } else if (selectedOption.equals("Azul")){
+            corPonto = Color.BLUE;
+        } else if (selectedOption.equals("Laranja")){
+            corPonto = Color.ORANGE;
+        }
+
+        addComboBox();
+        pEsquerda.add(labelx);
+        pEsquerda.add(desenhar);
+        pEsquerda.add(name);
+        //addComboBoxCor();
+        pEsquerda.revalidate();
+        pEsquerda.repaint();
+    }
+    
+
     private void addComboBox() {
         boxMenu.setModel(boxModel);
-        boxMenu.setBounds(10, 60, boxMenu.getPreferredSize().width, boxMenu.getPreferredSize().height);
+        boxMenu.setBounds(10, 40, boxMenu.getPreferredSize().width, boxMenu.getPreferredSize().height);
         pEsquerda.add(boxMenu);
 
         // Adicione um ouvinte de alteração de seleção ao JComboBox
@@ -162,6 +222,7 @@ public class Tela extends JFrame {
             pEsquerda.add(textFinal);
         } else if (selectedOption.equals("Círculos")) {
             
+            
             // centro e raio
             labelCentro.setBounds(10, 110, labelCentro.getPreferredSize().width, labelCentro.getPreferredSize().height);
             textCentro.setBounds(80, 110, textCentro.getPreferredSize().width, textCentro.getPreferredSize().height);
@@ -196,7 +257,6 @@ public class Tela extends JFrame {
             pEsquerda.add(labelP2);pEsquerda.add(textP2);
         } else if (selectedOption.equals("Polilinha")) {
             labelLinha.setText("Ponto 1:");
-            cont = 1;
             pontos.clear();
             
             // pontos
@@ -208,27 +268,30 @@ public class Tela extends JFrame {
             pEsquerda.add(adicionar);
 
             adicionar.addActionListener(new ActionListener(){
-                //int cont = 1;
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    cont+=1;
                     String pontoLinha = textLinha.getText();
                     String[] pontoA = pontoLinha.split(",");
-                    if(!pontoLinha.isEmpty() && cont < 8){
+                    if(!pontoLinha.isEmpty() && pontos.size() < 8){
                         int xInicial = Integer.parseInt(pontoA[0]);
                         int xFinal = Integer.parseInt(pontoA[1]);
                         pontos.add(new Ponto(xInicial,xFinal));
-                        String contar = String.valueOf(cont);
-                        labelLinha.setText("Ponto "+contar+":");
+                        String contar = String.valueOf(pontos.size()+1);
+                        if(pontos.size() < 9){
+                            labelLinha.setText("Ponto "+contar+":");
+                        }
+                        
                         textLinha.setText("");
                     }
                 }
             });
         }
 
-        // Atualize o layout do painel esquerdo
+        // Atualiza o layout do painel esquerdo
         pEsquerda.add(desenhar);
+        pEsquerda.add(labelx);
         pEsquerda.add(name);
+        addComboBoxCor();
         pEsquerda.revalidate();
         pEsquerda.repaint();
     }
@@ -253,9 +316,7 @@ public class Tela extends JFrame {
                 Ponto p1 = new Ponto(xInicial,xFinal);
                 Ponto p2 = new Ponto(yInicial,yFinal);
                 Bresenham bresenham = new Bresenham(p1, p2);
-                for (Ponto p : bresenham.getPontos()) {
-                    plano.paintSquare(p.x,p.y, Color.RED);
-                }
+                plano.pintarPontos(bresenham.listapontos, corPonto);
             
             }
         } else if (selectedOption.equals("Círculos")) {
@@ -270,10 +331,8 @@ public class Tela extends JFrame {
                 Ponto pCentro = new Ponto(centroX, centroY);
                 Circulo circulo = new Circulo(raioInt, pCentro);
 
-                plano.paintSquare(centroX,centroY,Color.BLACK);
-                for (Ponto p : circulo.getPontos()) {
-                    plano.paintSquare(p.x,p.y, Color.RED);
-                }
+                plano.pintarPonto(centroX,centroY,Color.BLACK);
+                plano.pintarPontos(circulo.listapontos, corPonto);
             
             }
             
@@ -304,40 +363,44 @@ public class Tela extends JFrame {
                 Ponto ponto2 = new Ponto(p2X, p2Y);
                 Curvas curvas = new Curvas(pInicial, ponto1, ponto2, pFinal);
                 
-                plano.paintSquare(p1X,p1Y,Color.BLACK);
-                plano.paintSquare(p2X,p2Y,Color.BLACK);
-                for (Ponto p : curvas.getPontos()) {
-                    plano.paintSquare(p.x,p.y, Color.RED);
-                }
-                plano.paintSquare(p1X,p1Y,Color.BLACK);
-                plano.paintSquare(p2X,p2Y,Color.BLACK);
+                plano.pintarPontos(curvas.listapontos, corPonto);
+                plano.pintarPonto(p1X,p1Y,Color.BLACK);
+                plano.pintarPonto(p2X,p2Y,Color.BLACK);
             
             }
+            
             
         }
         else if (selectedOption.equals("Polilinha")) {
             
-            if (!pontos.isEmpty()) {
+            if (!pontos.isEmpty() && pontos.size() >= 3) {
                 Polilinhas poli = new Polilinhas(pontos);
                 
-                
-                for (Ponto p : poli.getPontos()) {
-                    plano.paintSquare(p.x,p.y, Color.RED);
-                }
-                for (Ponto p : pontos) {
-                    plano.paintSquare(p.x,p.y, Color.BLACK);
-                }
-            }
-            
+                plano.pintarPontos(poli.listapontos, corPonto);
+                plano.pintarPontos(pontos, Color.BLACK);
+            } 
         }
     }
     private void init() {
         this.setTitle("Computação Gráfica: Trabalho 1");
         this.setSize(820, 510);
         this.getContentPane().setLayout(new BorderLayout());
-        this.getContentPane().add(getpDireita(), BorderLayout.EAST);
-        this.getContentPane().add(getpEsquerda(), BorderLayout.WEST);
+    
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        this.setResizable(false);
+        labelCartesiano.setFont(novaFonte);
+        labelCartesiano.setBounds(392,4,labelCartesiano.getPreferredSize().width,labelCartesiano.getPreferredSize().height);
+        labely.setBounds(576, 434, labely.getPreferredSize().width, labely.getPreferredSize().height);
+        panel.add(labelCartesiano);
+        panel.add(labely);
+        panel.add(getpDireita(), BorderLayout.EAST);
+        panel.add(getpEsquerda());
+        
+    
+        this.getContentPane().add(panel, BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
     }
+    
 }
