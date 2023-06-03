@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Curvas {
     public ArrayList <Ponto> listapontos = new ArrayList<>();
-    private ArrayList <Ponto> pontos = new ArrayList<>();
+    //private ArrayList <Ponto> pontos = new ArrayList<>();
 
 
     public ArrayList<Ponto> getPontos() {
@@ -27,7 +27,7 @@ public class Curvas {
 
             
 
-            pontos.add(new Ponto((int) x, (int) y));
+            //pontos.add(new Ponto((int) x, (int) y));
             if(anterior  != null){
                 Bresenham b = new Bresenham(anterior, ponto);
                 listapontos.addAll(b.listapontos);
@@ -35,7 +35,6 @@ public class Curvas {
            anterior = ponto;
         }
 
-       // listapontos  = bresenham.listapontos;
     }
 
     private double coordenadas(double t, int pInicial, int c1, int c2, int pFinal) {

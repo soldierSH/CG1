@@ -1,5 +1,64 @@
 package tela;
 
+import java.util.ArrayList;
+
 public class Varredura {
-    
+    public ArrayList<Ponto> listapontos = new ArrayList<>();
+
+    Varredura(ArrayList<Ponto> pontos) {
+        if (pontos.get(0).equals(pontos.get(pontos.size() - 1))  && !pontos.isEmpty()) {
+            varrer(pontos);
+        }
+        
+    }
+
+    public void varrer(ArrayList<Ponto> pontos) {
+
+        int minY = Integer.MAX_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        for (Ponto p : pontos) {
+            int y = p.getY();
+            if (y < minY) {
+                minY = y;
+            }
+            if (y > maxY) {
+                maxY = y;
+            }
+        }
+
+        // Varredura de linhas verificando interseções
+        for (int y = minY + 1; y < maxY; y++) {
+            ArrayList<Double> intersecoes = new ArrayList<>();
+
+            for (int i = 0; i < pontos.size(); i++) {
+                Ponto p1 = pontos.get(i);
+                Ponto p2 = pontos.get((i + 1) % pontos.size());
+
+                int x1 = p1.getX();
+                int y1 = p1.getY();
+                int x2 = p2.getX();
+                int y2 = p2.getY();
+
+                // Verifica se a aresta cruza a linha horizontal
+                if ((y1 <= y && y2 > y) || (y2 <= y && y1 > y)) {
+                    double xIntersecao = (double) (x1 * (y2 - y) + x2 * (y - y1)) / (y2 - y1);
+                    intersecoes.add(xIntersecao);
+                }
+            }
+
+            // Ordena as interseções em ordem crescente
+            intersecoes.sort(Double::compare);
+
+            // Pinta as linhas horizontais entre as interseções
+            for (int i = 0; i < intersecoes.size(); i += 2) {
+                int x1 = (int) Math.ceil(intersecoes.get(i));
+                int x2 = (int) Math.floor(intersecoes.get(i + 1));
+
+                // Pinta os pontos entre x1 e x2 na linha y
+                for (int x = x1; x <= x2; x++) {
+                    listapontos.add(new Ponto(x, y));
+                }
+            }
+        }
+    }
 }

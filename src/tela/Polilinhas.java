@@ -22,9 +22,6 @@ public class Polilinhas {
             anterior = p;
             cont++;
         } while (cont != pontos.size());
-            //b.pontos(new Ponto(pontos.get(i).x,pontos.get(i).y), new Ponto(pontos.get(i+1).x,pontos.get(i+1).y));
-       // listapontos = b.listapontos;
-        System.out.println(listapontos.toString());
         
     }
 

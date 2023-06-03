@@ -4,14 +4,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PlanoCartesiano extends JPanel {
-
     private int numPontos;
+    public int getNumPontos() {
+        return numPontos;
+    }
+
     private int tamQuadrado;
     private int centroX; //centro de X
     private int centroY; //centro de Y
-    private Color[][] grid;
+    public Color[][] grid;
     public boolean recorte = false;
-    private ArrayList<Ponto> pintar  = new ArrayList<>();
+    public ArrayList<Ponto> pintar  = new ArrayList<>();
     private ArrayList<Ponto> pintarRecorte  = new ArrayList<>();
 
     public PlanoCartesiano(int numPontos, int tamQuadrado) {
@@ -63,37 +66,25 @@ public class PlanoCartesiano extends JPanel {
             int i = p.x + numPontos / 2;
             int j = -p.y + numPontos / 2 - 1;
 
-            
             if (recorte == false) {
                 if (i >= 0 && i < numPontos && j >= 0 && j < numPontos) {
                     grid[i][j] = color;
                 }
-            } else {
+            } else {//Preencher janela de recorte
                 if (i >= 0 && i < numPontos && j >= 0 && j < numPontos) {
                     for (Ponto ponto : pintar) {
-                        if (i >= 0 && i < numPontos && j >= 0 && j < numPontos) {
-                            grid[ponto.x][ponto.y] = Color.LIGHT_GRAY;
-                        }
-                    }
-                    boolean pontoEncontrado = false;
-                    for (Ponto ponto : pintar) {
+                        grid[ponto.x][ponto.y] = Color.LIGHT_GRAY;
                         if(ponto.x == i && ponto.y == j){
-                            pontoEncontrado = true;
-                            break;
+                            pintarRecorte.add(new Ponto(i, j));
                         }
                     }
-                    if (pontoEncontrado) {
-                        pintarRecorte.add(new Ponto(i, j));
-                        //grid[i][j] = color;
-                    }
-                }
-                
-            }
-            
+                } 
+            } 
         }
         for (Ponto ponto : pintarRecorte) {
             grid[ponto.x][ponto.y]= color;
         }
+        pintarRecorte.clear();
         repaint();
     }
     
@@ -118,7 +109,10 @@ public class PlanoCartesiano extends JPanel {
             }
             repaint();
         }
+    }
 
+    public Color[][] getGrid() {
+        return grid;
     }
 
     public void limparPontos() {
