@@ -16,14 +16,14 @@ public class Circulo {
     private void pontosCirculo(int raio, Ponto centro){
         int x = 0;
         int y = raio;
-        int d = 1-raio;
+        int e = -raio;
 
         addPonto(x, y, centro);
         while (y > x) {
-            if (d < 0) {
-                d += 2 * x + 3;
+            if (e < 0) {
+                e += 2 * x + 3;
             } else {
-                d += 2 * (x - y) + 5;
+                e += 2 * (x - y) + 5;
                 y--;
             }
             x++;

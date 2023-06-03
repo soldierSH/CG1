@@ -26,7 +26,7 @@ public class Varredura {
             }
         }
 
-        // Varredura de linhas verificando interseções
+        // verificando interseções
         for (int y = minY + 1; y < maxY; y++) {
             ArrayList<Double> intersecoes = new ArrayList<>();
 
@@ -39,14 +39,14 @@ public class Varredura {
                 int x2 = p2.getX();
                 int y2 = p2.getY();
 
-                // Verifica se a aresta cruza a linha horizontal
+                // verifica se a aresta cruza a linha horizontal
                 if ((y1 <= y && y2 > y) || (y2 <= y && y1 > y)) {
                     double xIntersecao = (double) (x1 * (y2 - y) + x2 * (y - y1)) / (y2 - y1);
                     intersecoes.add(xIntersecao);
                 }
             }
 
-            // Ordena as interseções em ordem crescente
+            // Ordenando interseções em ordem crescente
             intersecoes.sort(Double::compare);
 
             // Pinta as linhas horizontais entre as interseções
@@ -54,7 +54,6 @@ public class Varredura {
                 int x1 = (int) Math.ceil(intersecoes.get(i));
                 int x2 = (int) Math.floor(intersecoes.get(i + 1));
 
-                // Pinta os pontos entre x1 e x2 na linha y
                 for (int x = x1; x <= x2; x++) {
                     listapontos.add(new Ponto(x, y));
                 }

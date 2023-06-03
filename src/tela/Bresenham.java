@@ -33,50 +33,33 @@ public class Bresenham {
         int deltaY = p2.getY() - p1.getY();
     
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            if (deltaX < 0) {
-                p1 = new Ponto(p1.getY(), p1.getX());
-                p2 = new Ponto(p2.getY(), p2.getX());
-            }
-            this.mudaX = false;
-            this.mudaY = false;
-            this.mudaXY = false;
-        } else {
-            if (deltaY < 0) {
-                p1 = new Ponto(p1.getX(), -p1.getY());
-                p2 = new Ponto(p2.getX(), -p2.getY());
-            }
-            this.mudaX = false;
-            this.mudaY = false;
-            this.mudaXY = false;
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                if (deltaX > 0 && deltaY > 0) {
-                    this.mudaX = true;
-                } else if (deltaX < 0 && deltaY >= 0) {
-                    this.mudaX = true;
-                    this.mudaY = true;
-                } else if (deltaX < 0 && deltaY < 0) {
-                    this.mudaY = true;
-                } else {
-                    this.mudaY = true;
-                    this.mudaX = true;
-                }
+            if (deltaX > 0 && deltaY > 0) {
+                this.mudaX = true;
+            } else if (deltaX < 0 && deltaY >= 0) {
+                this.mudaX = true;
+                this.mudaY = true;
+            } else if (deltaX < 0 && deltaY < 0) {
+                this.mudaY = true;
             } else {
-                if (deltaX > 0 && deltaY > 0) {
-                    this.mudaXY = true;
-                } else if (deltaX <= 0 && deltaY >= 0) {
-                    this.mudaX = true;
-                    this.mudaXY = true;
-                } else if (deltaX < 0 && deltaY < 0) {
-                    this.mudaX = true;
-                    this.mudaY = true;
-                    this.mudaXY = true;
-                } else {
-                    this.mudaY = true;
-                    this.mudaXY = true;
-                }
+                this.mudaY = true;
+                this.mudaX = true;
+            }
+        } else {
+            if (deltaX > 0 && deltaY > 0) {
+                this.mudaXY = true;
+            } else if (deltaX <= 0 && deltaY >= 0) {
+                this.mudaX = true;
+                this.mudaXY = true;
+            } else if (deltaX < 0 && deltaY < 0) {
+                this.mudaX = true;
+                this.mudaY = true;
+                this.mudaXY = true;
+            } else {
+                this.mudaY = true;
+                this.mudaXY = true;
             }
         }
-    }
+}        
     
     private void reflexao(ArrayList<Ponto> listapontos){
         if (this.mudaX) {

@@ -19,7 +19,7 @@ public class Ponto {
     public void setY(int y) {
         this.y = y;
     }
-    //métodos paa invrter sinal
+    //métodos para inverter sinal
     public void iSinalX() {
         this.x = -this.x;
     }

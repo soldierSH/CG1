@@ -12,7 +12,7 @@ public class Transformar {
     public ArrayList<Ponto> Rotacionar(ArrayList<Ponto> pontos, String[] pivoS, String anguloS){
         Ponto pivo = new Ponto(Integer.parseInt(pivoS[0]),Integer.parseInt(pivoS[1]));
         double angulo = Double.parseDouble(anguloS);
-        double radiano = Math.toRadians(angulo); //converte o ângulo pra radiano
+        double radiano = Math.toRadians(angulo); //converte o numero pra radiano
         double seno = Math.sin(radiano);
         double cosseno = Math.cos(radiano);
         Ponto anterior = null;
@@ -21,10 +21,10 @@ public class Transformar {
 
         for (Ponto p : pontos) {
             
-            double diffX = p.getX() -pivo.getX();
-            double diffY = p.getY() -pivo.getY();
-            double x = diffX * cosseno - diffY * seno + pivo.getX();
-            double y = diffX * seno + diffY * cosseno + pivo.getY();
+            double dX = p.getX() -pivo.getX();
+            double dY = p.getY() -pivo.getY();
+            double x = dX * cosseno - dY * seno + pivo.getX();
+            double y = dX * seno + dY * cosseno + pivo.getY();
 
             Ponto ponto = new Ponto((int)x, (int)y);
 
@@ -62,10 +62,10 @@ public class Transformar {
         listapontos.clear();
 
         for (Ponto p : pontos) {
-            double diffX = p.getX() -fixo.getX();
-            double diffY = p.getY() -fixo.getY();
-            int x = (int) (diffX * fatX) + fixo.getX();
-            int y = (int) (diffY * fatY) + fixo.getY();
+            double dX = p.getX() -fixo.getX();
+            double dY = p.getY() -fixo.getY();
+            int x = (int) (dX * fatX) + fixo.getX();
+            int y = (int) (dY * fatY) + fixo.getY();
 
             Ponto ponto = new Ponto(x, y);
             if(anterior  != null){
