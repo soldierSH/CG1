@@ -12,9 +12,6 @@ public class App {
         System.out.println("Hello world!");
 
         //Bresenham b = new Bresenham(pt1,pt2);
-       // for (Ponto p : b.listapontos) {
-        //    System.out.println(p.toString());
-        //}
 
         SwingUtilities.invokeLater(()->{
             Tela tela = new Tela();
